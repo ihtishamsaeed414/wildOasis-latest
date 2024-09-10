@@ -7,6 +7,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 // import Menus from "ui/Menus";
 // import Modal from "ui/Modal";
 // import ConfirmDelete from "ui/ConfirmDelete";
@@ -71,12 +72,12 @@ function CabinRow({ cabin }) {
     // mutationFn: (id) => deleteCabin(id),
     mutationFn: deleteCabin,
     onSuccess: () => {
-      alert("Cabin successfuly deleted");
+      toast.success("Cabin successfuly deleted");
       QueryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
     },
-    onError: (err) => alert(err.message),
+    onError: (err) => toast.error(err.message),
   });
   return (
     <TableRow role="row">
