@@ -1,6 +1,12 @@
 import styled from "styled-components";
 // import { HiPencil, HiTrash, HiSquare2Stack } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
 // import Menus from "ui/Menus";
 // import Modal from "ui/Modal";
 // import ConfirmDelete from "ui/ConfirmDelete";
@@ -52,7 +58,26 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { name, maxCapacity, regularPrice, discount, image } = cabin;
+  const {
+    id: cabinId,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+  } = cabin;
+  const QueryClient = useQueryClient();
+  const { isLoading: isDeleting, mutate } = useMutation({
+    // mutationFn: (id) => deleteCabin(id),
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      alert("Cabin successfuly deleted");
+      QueryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+    },
+    onError: (err) => alert(err.message),
+  });
   return (
     <TableRow role="row">
       <Img src={image} />
@@ -60,7 +85,9 @@ function CabinRow({ cabin }) {
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
-      <button>Delete</button>
+      <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
+        Delete
+      </button>
     </TableRow>
   );
   // const {
