@@ -70,9 +70,11 @@ function CabinRow({ cabin }) {
   const QueryClient = useQueryClient();
   const { isLoading: isDeleting, mutate } = useMutation({
     // mutationFn: (id) => deleteCabin(id),
+    // deleteCabin will get current of id of the event trigger row
     mutationFn: deleteCabin,
     onSuccess: () => {
       toast.success("Cabin successfuly deleted");
+      //invalidating query client so that aftetr mutation refetch triggers
       QueryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
