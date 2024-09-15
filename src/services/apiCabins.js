@@ -79,6 +79,30 @@ export async function createEditCabin(newCabin, id) {
 
   return data;
 }
+
+export async function getSettings() {
+  const { data, error } = await supabase.from("settings").select("*").single();
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be loaded");
+  }
+  // return data[0]; same thing as below
+  return data;
+}
+
+export async function updateSetting(newSetting) {
+  const { data, error } = await supabase
+    .from("settings")
+    .update(newSetting)
+    .eq("id", 1)
+    .single();
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be updated");
+  }
+  return data;
+}
+
 export async function deleteCabin(id) {
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
   if (error) {
