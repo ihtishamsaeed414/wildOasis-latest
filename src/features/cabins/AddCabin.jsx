@@ -11,13 +11,6 @@ function AddCabin() {
       <Modal.Window name="cabin-form">
         <CreateCabinForm />
       </Modal.Window>
-
-      <Modal.Open opens="table">
-        <Button>Add new Cabin</Button>
-      </Modal.Open>
-      <Modal.Window name="table">
-        <CabinTable />
-      </Modal.Window>
     </Modal>
     // <Modal>
     //   <Modal.Toggle opens='new-cabin'>
@@ -27,16 +20,6 @@ function AddCabin() {
     //     <CreateCabinForm />
     //   </Modal.Window>
     // </Modal>
-    // <>
-    //   <Button onClick={() => setIsOpenModal((show) => !show)}>
-    //     Add new cabin
-    //   </Button>
-    //   {isOpenModal && (
-    //     <Modal onClose={() => setIsOpenModal(false)}>
-    //       <CreateCabinForm onCloseModal={() => setIsOpenModal(false)} />
-    //     </Modal>
-    //   )}
-    // </>
   );
 }
 
